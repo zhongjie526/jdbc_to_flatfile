@@ -1,0 +1,4 @@
+batch:
+  outputFileName: transactions.csv
+  query: select ProductID,ProductName,Price,ProductDescription from transactions
+  

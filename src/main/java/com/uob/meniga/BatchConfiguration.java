@@ -21,8 +21,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import com.uob.meniga.model.BatchJobConfig;
 import com.uob.meniga.model.Data;
 import com.uob.meniga.util.CommonUtil;
 
@@ -39,6 +39,9 @@ public class BatchConfiguration {
 	@Autowired
 	public DataSource dataSource;
 	
+    @Autowired
+    protected BatchJobConfig configuration;
+	
 //	@Bean
 //	public DataSource dataSource() {
 //		final DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -54,7 +57,6 @@ public class BatchConfiguration {
 //		return dataSource;
 //	}
 	
-
 	
 	public class DataRowMapper implements RowMapper<Data>{
 		@Override
@@ -68,7 +70,7 @@ public class BatchConfiguration {
 	public JdbcCursorItemReader<Data> reader(){
 		JdbcCursorItemReader<Data> reader = new JdbcCursorItemReader<Data>();
 		reader.setDataSource(dataSource);
-		reader.setSql("SELECT id,name FROM [user]");
+		reader.setSql(configuration.getQuery());
 		reader.setRowMapper(new DataRowMapper());
 		return reader;
 	}
@@ -78,17 +80,14 @@ public class BatchConfiguration {
         return new DataItemProcessor();
     }
 	
-
-	
 	@Bean
 	public FlatFileItemWriter<String> userWriter(){
 		FlatFileItemWriter<String> writer = new FlatFileItemWriter<String>();
-		writer.setResource(new FileSystemResource(new File("output_user.csv")));
+		writer.setResource(new FileSystemResource(new File(configuration.getOutputFolder()+configuration.getOutputFileName())));
 		writer.setLineAggregator(new PassThroughLineAggregator<String>());
 		
 		return writer;
 	}
-	
 	
 	
 	@Bean

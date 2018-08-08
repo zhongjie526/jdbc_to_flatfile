@@ -4,3 +4,7 @@ spring:
     username: sa
     password: yourStrong(!)Password
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+batch:
+  outputFolder: /Users/frankzhang/eclipse-workspace/MenigaExtractor/outputFiles/
+

@@ -1,0 +1,3 @@
+batch:
+  outputFileName: user.csv
+  query: select * from [user]

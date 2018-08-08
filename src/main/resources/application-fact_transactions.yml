@@ -1,0 +1,4 @@
+batch:
+  outputFileName: fact_transactions.csv
+  query: select CONVERT(VARCHAR(10), TransactionDate, 112),ProductID,ProductName,Price,ProductDescription from fact_transactions
+  
