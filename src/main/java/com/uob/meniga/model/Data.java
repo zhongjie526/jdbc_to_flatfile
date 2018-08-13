@@ -12,4 +12,8 @@ public class Data {
 		this.outputValue = outputValue;
 	}
 	
+	public void setHeader(String header) {
+		this.setOutputValue(header+"\n"+this.getOutputValue());
+	}
+	
 }

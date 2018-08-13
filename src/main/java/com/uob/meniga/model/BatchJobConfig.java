@@ -19,7 +19,40 @@ public class BatchJobConfig {
     @Value("${batch.query}")
     private String query;
     
-    public String getQuery() {
+    @Value("${batch.sourceSystemCode}")
+    private String sourceSystemCode;
+    
+    @Value("${batch.countryCode}")
+    private String countryCode;
+    
+    @Value("${batch.delimiter}")
+    private String delimiter;
+    
+    public String getSourceSystemCode() {
+		return sourceSystemCode;
+	}
+
+	public void setSourceSystemCode(String sourceSystemCode) {
+		this.sourceSystemCode = sourceSystemCode;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+
+	public String getDelimiter() {
+		return delimiter;
+	}
+
+	public void setDelimiter(String delimiter) {
+		this.delimiter = delimiter;
+	}
+
+	public String getQuery() {
 		return query;
 	}
 

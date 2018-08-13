@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootApplication
 public class MenigaExtractorApplication {
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(MenigaExtractorApplication.class, args);
@@ -14,4 +15,5 @@ public class MenigaExtractorApplication {
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+	
 }

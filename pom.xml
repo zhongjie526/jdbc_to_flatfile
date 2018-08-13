@@ -57,6 +57,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+				<mainClass>com.uob.meniga.MenigaExtractorApplication</mainClass>
+                <executable>true</executable>
+            </configuration>
 			</plugin>
 			
 			<plugin>
@@ -70,14 +74,13 @@
 			            </goals>
 			            <configuration>
 			                <archive>
-			                <manifest>
-			                	<addClasspath>true</addClasspath>
-			                	<classpathPrefix>libs/</classpathPrefix>
-			                    <mainClass>
-			                        com.uob.meniga.MenigaExtractorApplication
-			                    </mainClass>
-			                </manifest>
+			                	<manifest>
+			                    	<mainClass>com.uob.meniga.MenigaExtractorApplication</mainClass>
+			                	</manifest>
 			                </archive>
+			                <descriptors>
+                        		<descriptor>src/assembly/bin.xml</descriptor>
+                    	</descriptors>
 			                <descriptorRefs>
 			                    <descriptorRef>jar-with-dependencies</descriptorRef>
 			                </descriptorRefs>

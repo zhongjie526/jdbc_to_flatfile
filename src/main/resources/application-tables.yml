@@ -1,0 +1,13 @@
+spring:
+  profiles: transactions
+batch:
+  outputFileName: transactions.csv
+  query: select ProductID,ProductName,Price,ProductDescription from transactions
+  
+---
+
+spring:
+  profiles: fact_transactions
+batch:
+  outputFileName: fact_transactions.csv
+  query: select CONVERT(VARCHAR(10), TransactionDate, 112),ProductID,ProductName,Price,ProductDescription from fact_transactions

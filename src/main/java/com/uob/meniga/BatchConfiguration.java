@@ -1,6 +1,8 @@
 package com.uob.meniga;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.Writer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,6 +16,8 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
+import org.springframework.batch.item.file.FlatFileFooterCallback;
+import org.springframework.batch.item.file.FlatFileHeaderCallback;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.transform.PassThroughLineAggregator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,13 +65,14 @@ public class BatchConfiguration {
 	public class DataRowMapper implements RowMapper<Data>{
 		@Override
 		public Data mapRow(ResultSet rs, int rowNum) throws SQLException{
-			Data user = new Data();
-			user.setOutputValue(CommonUtil.removeNull(rs));
-			return user;
+			Data data = new Data();
+			String dataOutput = CommonUtil.removeNull(rs,configuration.getDelimiter());
+			data.setOutputValue(dataOutput);
+			return data;
 		}
 	}
 	
-	public JdbcCursorItemReader<Data> reader(){
+	public JdbcCursorItemReader<Data> dataReader(){
 		JdbcCursorItemReader<Data> reader = new JdbcCursorItemReader<Data>();
 		reader.setDataSource(dataSource);
 		reader.setSql(configuration.getQuery());
@@ -76,13 +81,29 @@ public class BatchConfiguration {
 	}
 	
     @Bean
-    public ItemProcessor<Data, String> processor() {
+    public ItemProcessor<Data, String> dataProcessor() {
         return new DataItemProcessor();
     }
+    
+
 	
 	@Bean
-	public FlatFileItemWriter<String> userWriter(){
+	public FlatFileItemWriter<String> dataWriter(){
 		FlatFileItemWriter<String> writer = new FlatFileItemWriter<String>();
+		writer.setHeaderCallback(new FlatFileHeaderCallback() {
+
+            public void writeHeader(Writer writer) throws IOException {
+                writer.write("H"+configuration.getDelimiter()+configuration.getSourceSystemCode()+configuration.getDelimiter()+configuration.getCountryCode());
+
+            }
+        });
+		writer.setFooterCallback(new FlatFileFooterCallback() {
+
+            public void writeFooter(Writer writer) throws IOException {
+                writer.write("T");
+
+            }
+        });
 		writer.setResource(new FileSystemResource(new File(configuration.getOutputFolder()+configuration.getOutputFileName())));
 		writer.setLineAggregator(new PassThroughLineAggregator<String>());
 		
@@ -93,15 +114,15 @@ public class BatchConfiguration {
 	@Bean
 	public Step step1() {
 		return stepBuilderFactory.get("step1").<Data, String> chunk(10)
-				.reader(reader())
-				.processor(processor())
-				.writer(userWriter())
+				.reader(dataReader())
+				.processor(dataProcessor())
+				.writer(dataWriter())
 				.build();
 	}
 	
 	@Bean
 	public Job exportUserJob() {
-		return jobBuilderFactory.get("exportUserJob")
+		return jobBuilderFactory.get("JDBCextractorJob")
 				.incrementer(new RunIdIncrementer())
 				.flow(step1())
 				.end()
