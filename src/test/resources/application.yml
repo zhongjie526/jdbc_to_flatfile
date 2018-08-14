@@ -7,4 +7,6 @@ spring:
 
 batch:
   outputFolder: /Users/frankzhang/eclipse-workspace/MenigaExtractor/outputFiles/
-
+  sourceSystemCode: ADV
+  countryCode: TH
+  delimiter: "\u0007"
