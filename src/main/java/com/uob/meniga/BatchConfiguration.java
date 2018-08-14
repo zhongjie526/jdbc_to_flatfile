@@ -54,6 +54,8 @@ public class BatchConfiguration {
 			Data data = new Data();
 			String dataOutput = CommonUtil.removeNull(rs,configuration.getDelimiter());
 			data.setOutputValue(dataOutput);
+			String hashSum = CommonUtil.getField(rs, configuration.getHashSumCol());
+			data.setHashSum(hashSum);
 			return data;
 		}
 	}
@@ -66,10 +68,6 @@ public class BatchConfiguration {
 		return reader;
 	}
 	
-    @Bean
-    public ItemProcessor<Data, String> dataProcessor() {
-        return new DataItemProcessor();
-    }
     
     @Autowired
     HeaderFooterWriter hfwriter = new HeaderFooterWriter();
@@ -91,7 +89,7 @@ public class BatchConfiguration {
 	public Step step1() {
 		return stepBuilderFactory.get("step1").<Data, String> chunk(10000)
 				.reader(dataReader())
-				.processor(dataProcessor())
+				.processor(hfwriter)
 				.writer(dataWriter(hfwriter))
 				.listener(hfwriter)
 				.build()

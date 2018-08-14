@@ -8,7 +8,16 @@ import com.uob.meniga.model.BatchJobConfig;
 
 public class CommonUtil {
 	
-
+	public static String getField(ResultSet rs, String fieldName) throws SQLException {
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columns = rsmd.getColumnCount();
+		
+		for (int i = 1; i < columns+1; i++) {
+			if (rsmd.getColumnName(i).equalsIgnoreCase(fieldName)) return rs.getString(i);
+		}
+		
+		return "";
+	}
 
 	
 	public static String removeNull(ResultSet rs,String delimiter) throws SQLException {
@@ -23,10 +32,10 @@ public class CommonUtil {
 				
 				if(i==1) {
 					if (rs.wasNull()) {
-						outputVal = outputVal  + "D";;
+						outputVal = outputVal  + "D" +delimiter;;
 					}
 					else {
-						outputVal = outputVal  + "D" +strVal;;
+						outputVal = outputVal  + "D" +delimiter+strVal;;
 					}
 				}
 				

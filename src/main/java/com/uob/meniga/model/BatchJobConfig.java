@@ -28,7 +28,18 @@ public class BatchJobConfig {
     @Value("${batch.delimiter}")
     private String delimiter;
     
-    public String getSourceSystemCode() {
+    @Value("${batch.hashSumCol}")
+    private String hashSumCol;
+    
+    public String getHashSumCol() {
+		return hashSumCol;
+	}
+
+	public void setHashSumCol(String hashSumCol) {
+		this.hashSumCol = hashSumCol;
+	}
+
+	public String getSourceSystemCode() {
 		return sourceSystemCode;
 	}
 
