@@ -4,7 +4,11 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
+import com.uob.meniga.model.BatchJobConfig;
+
 public class CommonUtil {
+	
+
 
 	
 	public static String removeNull(ResultSet rs,String delimiter) throws SQLException {

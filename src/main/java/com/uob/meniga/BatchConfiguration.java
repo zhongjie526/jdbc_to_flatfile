@@ -29,6 +29,7 @@ import org.springframework.jdbc.core.RowMapper;
 import com.uob.meniga.model.BatchJobConfig;
 import com.uob.meniga.model.Data;
 import com.uob.meniga.util.CommonUtil;
+import com.uob.meniga.util.HeaderFooterWriter;
 
 @Configuration
 @EnableBatchProcessing
@@ -44,22 +45,7 @@ public class BatchConfiguration {
 	public DataSource dataSource;
 	
     @Autowired
-    protected BatchJobConfig configuration;
-	
-//	@Bean
-//	public DataSource dataSource() {
-//		final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-////		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-////		dataSource.setUrl("jdbc:mysql://localhost:3306/meniga?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true");
-////		dataSource.setUsername("root");
-////		dataSource.setPassword("root");
-////		dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-////		dataSource.setUrl("jdbc:sqlserver://localhost:1433;databaseName=meniga");
-////		dataSource.setUsername("sa");
-////		dataSource.setPassword("yourStrong(!)Password");
-//		
-//		return dataSource;
-//	}
+    BatchJobConfig configuration;
 	
 	
 	public class DataRowMapper implements RowMapper<Data>{
@@ -85,25 +71,15 @@ public class BatchConfiguration {
         return new DataItemProcessor();
     }
     
+    @Autowired
+    HeaderFooterWriter hfwriter = new HeaderFooterWriter();
+    
 
-	
-	@Bean
-	public FlatFileItemWriter<String> dataWriter(){
+	public FlatFileItemWriter<String> dataWriter(HeaderFooterWriter hfwriter){
 		FlatFileItemWriter<String> writer = new FlatFileItemWriter<String>();
-		writer.setHeaderCallback(new FlatFileHeaderCallback() {
-
-            public void writeHeader(Writer writer) throws IOException {
-                writer.write("H"+configuration.getDelimiter()+configuration.getSourceSystemCode()+configuration.getDelimiter()+configuration.getCountryCode());
-
-            }
-        });
-		writer.setFooterCallback(new FlatFileFooterCallback() {
-
-            public void writeFooter(Writer writer) throws IOException {
-                writer.write("T");
-
-            }
-        });
+		
+		writer.setHeaderCallback(hfwriter);
+		writer.setFooterCallback(hfwriter);
 		writer.setResource(new FileSystemResource(new File(configuration.getOutputFolder()+configuration.getOutputFileName())));
 		writer.setLineAggregator(new PassThroughLineAggregator<String>());
 		
@@ -113,12 +89,15 @@ public class BatchConfiguration {
 	
 	@Bean
 	public Step step1() {
-		return stepBuilderFactory.get("step1").<Data, String> chunk(10)
+		return stepBuilderFactory.get("step1").<Data, String> chunk(10000)
 				.reader(dataReader())
 				.processor(dataProcessor())
-				.writer(dataWriter())
-				.build();
+				.writer(dataWriter(hfwriter))
+				.listener(hfwriter)
+				.build()
+				;
 	}
+	
 	
 	@Bean
 	public Job exportUserJob() {

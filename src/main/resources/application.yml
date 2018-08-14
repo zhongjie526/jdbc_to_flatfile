@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:sqlserver://localhost:1433;databaseName=meniga
-    username: sa
-    password: yourStrong(!)Password
+    username: frank
+    password: Frank123
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
 batch:
