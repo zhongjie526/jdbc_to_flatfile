@@ -1,9 +1,8 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=meniga
-    username: frank
-    password: Frank123
+    url: jdbc:sqlserver://10.0.2.15:1433;databaseName=meniga;IntegratedSecurity=true
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: admin
 
 batch:
   outputFolder: /Users/frankzhang/eclipse-workspace/MenigaExtractor/outputFiles/
