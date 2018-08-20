@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.uob.meniga.model.BatchJobConfig;
+import com.uob.meniga.model.Data;
 
 import org.junit.Assert;
 import org.mockito.Mockito;
@@ -55,6 +56,16 @@ public class MenigaExtractorTest {
 
         Assert.assertEquals(configuration.getQuery(),null);
         //Mockito.verify(namedParameterJdbcTemplate, Mockito.times(0)).query(Mockito.any(String.class), Mockito.any(Map.class), Mockito.any(RowCallbackHandler.class));
+    }
+    
+    @Test
+    public void testData() {
+    	Data data = new Data();
+    	data.setHashSum("columnABC");
+    	data.setOutputValue("outputvalues");
+    	
+    	Assert.assertEquals("columnABC", data.getHashSum());
+    	Assert.assertEquals("outputvalues", data.getOutputValue());
     }
 	
 
