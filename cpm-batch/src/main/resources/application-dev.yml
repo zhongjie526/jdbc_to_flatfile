@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: "jdbc:oracle:thin:@172.29.28.58:1521:pibsath"
+    username: "pib"
+    password: "a123b456"
+    driver-class-name: "oracle.jdbc.driver.OracleDriver"
+  jpa:
+    database-platform: "org.hibernate.dialect.Oracle10gDialect"
+
+
+batch:
+  outputFolder: "target/output/"
+  inputFolder: "target/input/"
+  country: "TH"
+  systemCode: "DGB"
+  pushServiceUrl: "http://172.29.227.89:9015/dge"
+  pushServiceVersion: "2.0"
+  pushApplicationCode: "DGB"
+  pushApplicationSubCode: "BAT"
+

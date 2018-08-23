@@ -1,0 +1,39 @@
+pipeline {
+    agent { label 'lxpibtsgv95'}
+
+    stages {
+		//Delete Binaries and Conf files before download to local workspace
+		 // sh 'rm -r dge-binaries${Version}${BuildNo}/*.war'
+        // Download binaries (war files) and conf.zip from Artifactory to local 		
+        stage('Download binaries') {
+           steps {
+              script {
+                    def server = Artifactory.server('artifactory-server')
+                    def downloadSpec = """{
+                      "files":[
+                            {
+                           "pattern": "dge-batch-binaries${Version}${BuildNo}/*.tar.gz", 
+                            "target": "dge-batch-binaries/"
+                            }
+                      ]
+		                }"""
+                    server.download(downloadSpec)
+                    def buildInfo = server.download(downloadSpec)
+                }
+           }
+        }
+        
+        // Deploy war and config files
+		stage('Untar DGE-Batch') {
+             steps 
+			 {
+                  // Copy binaries to applications folder
+                  sh 'rm -rf /prodlib/DVXSG/cpm-batch'
+				  sh 'tar -xzvf  dge-batch-binaries${Version}${BuildNo}/cpm*.tar.gz -C /prodlib/DVXSG'
+				  sh 'mv /prodlib/DVXSG/cpm-batch/build/config/${Country}/SIT/*.* /prodlib/DVXSG/cpm-batch/config'
+				  sh 'mv /prodlib/DVXSG/cpm-batch/build/scripts/${Country}/SIT/*.* /prodlib/DVXSG/cpm-batch/scripts'
+				  sh 'rm -rf /prodlib/DVXSG/cpm-batch/build'
+             }
+         }
+    }
+}

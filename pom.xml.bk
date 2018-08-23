@@ -44,6 +44,53 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Maven Repository Switchboard</name>
+            <layout>default</layout>
+            <url>http://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>uob-artifactory</id>
+            <name>uob-artifactory</name>
+            <url>http://172.29.227.98:9081/artifactory/digibank-local</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>uob-artifactory2</id>
+            <name>uob-artifactory2</name>
+            <url>http://172.29.227.98:9081/artifactory/digibank-local2</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <name>Maven Repository Switchboard</name>
+            <layout>default</layout>
+            <url>http://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>uob-artifactory</id>
+            <name>uob-artifactory</name>
+            <url>http://172.29.227.98:9081/artifactory/digibank-local</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -58,9 +105,9 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>oracle</groupId>
+            <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
-            <version>11.2.0.3</version>
+            <version>11.2.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -87,25 +134,14 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
             <version>2.0.1.RELEASE</version>
         </dependency>
-            </dependencies>
+        <dependency>
+            <groupId>com.dsss.crypto</groupId>
+            <artifactId>encrypt-so</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 	<modules>
 		<module>cpm-batch</module>
         <module>meniga-dwh-extract-edag</module>
 	</modules>
-
-
-<repositories>
-        <repository>
-            <id>DataNucleus_Repos2</id>
-            <name>DataNucleus Repository</name>
-            <url>http://www.datanucleus.org/downloads/maven2</url>
-        </repository>
-            </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>DataNucleus_2</id>
-            <url>http://www.datanucleus.org/downloads/maven2/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
 </project>

@@ -1,0 +1,67 @@
+batch:
+  name: "ExportIncentiveUsage"
+  processor: "ExportProcessor"
+  queries: [ "SELECT t.CIF_NUMBER, t.CPM_CODE, t.CPM_INCENTIVE_VALUE, t.CPM_INCENTIVE_TYPE, t.CPM_START, t.CPM_END, t.CPM_DELIVERED, t.CPM_CLICK, t.CPM_CLAIM, t.CPM_NOTIFIED from TPIB_CAMPAIGN_TARGETTED t, TPIB_CAMPAIGN c where c.CPM_IS_APPROVE=1 and c.CPM_START <= TRUNC(SYSDATE, 'DD') and c.CPM_END + 7 >= TRUNC(SYSDATE, 'DD') and c.CPM_CODE = t.CPM_CODE union select g.CIF_NUMBER, g.CPM_CODE, null, null, null, null, g.CPM_DELIVERED, g.CPM_CLICK, g.CPM_CLAIM, 0 from TPIB_CAMPAIGN_GENERIC g, TPIB_CAMPAIGN c where c.CPM_IS_APPROVE=1 and c.CPM_START <= TRUNC(SYSDATE, 'DD') and c.CPM_END + 7 >= TRUNC(SYSDATE, 'DD') and c.CPM_CODE = g.CPM_CODE"]
+  fileName: "TPIB_CAMPAIGN_USER_USAGE"
+  hashField: "CPM_DELIVERED"
+  headers:
+    -
+      fieldName: "recordType"
+      datatype: "String"
+    -
+      fieldName: "sourceSystemCode"
+      datatype: "String"
+    -
+      fieldName: "countryCode"
+      datatype: "String"
+    -
+      fieldName: "processingDate"
+      datatype: "String"
+    -
+      fieldName: "processingDateFull"
+      datatype: "String"
+  bodies:
+    -
+      fieldName: "recordType"
+      datatype: "String"
+    -
+      fieldName: "CIF_NUMBER"
+      datatype: "String"
+    -
+      fieldName: "CPM_CODE"
+      datatype: "String"
+    -
+      fieldName: "CPM_INCENTIVE_VALUE"
+      datatype: "Double"
+    -
+      fieldName: "CPM_INCENTIVE_TYPE"
+      datatype: "String"
+    -
+      fieldName: "CPM_START"
+      datatype: "String"
+    -
+      fieldName: "CPM_END"
+      datatype: "String"
+    -
+      fieldName: "CPM_DELIVERED"
+      datatype: "Integer"
+    -
+      fieldName: "CPM_CLICK"
+      datatype: "Integer"
+    -
+      fieldName: "CPM_CLAIM"
+      datatype: "Integer"
+    -
+      fieldName: "CPM_NOTIFIED"
+      datatype: "Integer"
+  footers:
+    -
+      fieldName: "recordType"
+      datatype: "String"
+    -
+      fieldName: "recordCount"
+      datatype: "Integer"
+    -
+      fieldName: "hashField"
+      datatype: "Integer"
+

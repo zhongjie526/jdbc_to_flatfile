@@ -1,0 +1,268 @@
+spring:
+  profiles: transactions
+batch:
+  outputFileName: transactions.csv
+  query: select ProductID,ProductName,Price,ProductDescription from transactions
+  hashSumCol: Price
+  
+---
+
+spring:
+  profiles: fact_transactions
+batch:
+  outputFileName: fact_transactions.csv
+  query: select CONVERT(VARCHAR(10), TransactionDate, 112),ProductID,ProductName,Price,ProductDescription from fact_transactions
+  hashSumCol: Price
+
+---
+
+spring:
+  profiles: users
+batch:
+  outputFileName: users.csv
+  query: select id,name from users 
+  hashSumCol: id
+  
+---
+
+spring:
+  profiles: dim_account_types
+batch:
+  outputFileName: dim_account_types.csv
+  query: select account_type_key, account_type_id,  account_type, account_class,  name, account_type_descr, import_native_account,  acct_org_id,  acct_org_bank_code_identifier,  acct_org_name,  acct_org_alt_name,  type_i_crc, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112), xtract_source from dim_account_types
+  hashSumCol: account_type_id 
+
+---
+
+spring:
+  profiles: dim_account
+batch:
+  outputFileName: dim_account.csv
+  query: select account_key,  account_id, account_identifier, name, balance,  limit,  CONVERT(VARCHAR(10),create_date, 112),  CONVERT(VARCHAR(10),last_update, 112),  inactive, inactive_descr, CONVERT(VARCHAR(10),attached_to_user_date, 112),  is_cloned_account,  is_cloned_account_descr,  currency_code,  is_demo_acct, is_wallet_acct, exclude_type, account_type_id,  account_type, account_type_class, account_type_name,  import_native_account,  acct_org_id,  acct_org_bank_code_identifier,  acct_org_name,  acct_org_alt_name,  primary_owner_id, account_churn_status, CONVERT(VARCHAR(10),churned_date, 112), type_i_crc, row_is_current, CONVERT(VARCHAR(10),row_start_date, 112), CONVERT(VARCHAR(10),row_end_date, 112), row_changed_reason, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source,  user_db from dim_account
+  hashSumCol: account_id 
+
+---
+
+spring:
+  profiles: dim_actives
+batch:
+  outputFileName: dim_actives.csv
+  query: select active_key, active_status,  is_active_flag, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from dim_actives
+  hashSumCol: active_key
+
+---
+
+spring:
+  profiles: dim_admin_users
+batch:
+  outputFileName: dim_admin_users.csv
+  query: select admin_user_key, admin_usr_id, native_user_identity, email,  CONVERT(VARCHAR(10),create_date, 112),  type_i_crc, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from dim_admin_users
+  hashSumCol: admin_usr_id
+
+---
+
+spring:
+  profiles: dim_categories
+batch:
+  outputFileName: dim_categories.csv
+  query: select category_key, category_id,  category_name,  sub_category_id,  sub_category_name,  category_type,  is_fixed_expense, classification, sub_classification, visibility, budget_generation_type, view_order, cash_flow_key,  type_i_crc, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from dim_categories
+  hashSumCol: category_id
+
+---
+
+spring:
+  profiles: dim_household_sizes
+batch:
+  outputFileName: dim_household_sizes.csv
+  query: select household_size_key, household_size_id,  apartment_type_id,  apartment_type_descr, apartment_size, apartment_rooms,  number_in_family, number_of_kids, number_of_cars, apartment_size_n, apartment_rooms_n,  number_in_family_n, number_of_kids_n, number_of_cars_n, insert_audit_key, update_audit_key from dim_household_sizes
+  hashSumCol: number_of_kids_n
+
+---
+
+spring:
+  profiles: dim_households
+batch:
+  outputFileName: dim_households.csv
+  query: select household_key,  household_id, household_id_h, household_size_id,  CONVERT(VARCHAR(10),create_date, 112),  CONVERT(VARCHAR(10),last_login_date, 112),  apartment_type_id,  apartment_type_descr,   apartment_rooms,  apartment_size_n, apartment_rooms_n,  postal_code,  number_in_family, number_of_kids, number_of_cars, number_in_family_n, number_of_kids_n, number_of_cars_n, realm_cnt,  person_cnt, shared_account_status,  complete_household,   marital_status_descr, account_cnt,  credit_card_cnt,  current_account_cnt,  savings_account_cnt,    demo_account_cnt, has_account_flag, has_account_descr,  household_churn_status, household_type, is_significant, has_valid_demographics,   comparison_activity_kpi,  transaction_stability_kpi,  eop_tv, eop_tv_other, card_check, CONVERT(VARCHAR(10),churned_date, 112), currency_code,  type_i_crc, row_is_current, CONVERT(VARCHAR(10),row_start_date, 112), CONVERT(VARCHAR(10),row_end_date, 112), row_changed_reason, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source,  py_eop_tv,  py_eop_tv_other from dim_households
+  hashSumCol: account_cnt
+
+---
+
+spring:
+  profiles: dim_life_goals
+batch:
+  outputFileName: dim_life_goals.csv
+  query: select life_goal_key,  life_goal_id, CONVERT(VARCHAR(10),create_date, 112),  CONVERT(VARCHAR(10),modified_date, 112),  CONVERT(VARCHAR(10),start_date, 112), CONVERT(VARCHAR(10),target_date, 112),  life_goal_name, target_amount,  recurring_amount, intercept_amount, current_amount, is_deleted, is_deleted_descr, is_achieved,  is_achieved_descr,  CONVERT(VARCHAR(10),achieved_date, 112),  is_withdrawn, is_withdrawn_descr, category_id,  category_name,  type_i_crc, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source,  user_db from dim_life_goals
+  hashSumCol: target_amount
+
+---
+
+spring:
+  profiles: dim_notification_channels
+batch:
+  outputFileName: dim_notification_channels.csv
+  query: select notification_channel_key, notification_channel_id,  channel_name, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from dim_notification_channels
+  hashSumCol: notification_channel_id
+---
+
+spring:
+  profiles: dim_notification_proc_status
+batch:
+  outputFileName: dim_notification_proc_status.csv
+  query: select notification_proc_status_key, status_code,  status, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from dim_notification_proc_status
+  hashSumCol: status_code
+
+---
+
+spring:
+  profiles: dim_notification_reads
+batch:
+  outputFileName: dim_notification_reads.csv
+  query: select notification_read_key,  read_code,  read_status,  insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from dim_notification_reads
+  hashSumCol: read_code
+
+---
+
+spring:
+  profiles: dim_notification_types
+batch:
+  outputFileName: dim_notification_types.csv
+  query: select notification_type_key,  notification_name,  notification_type_id, active_status,  active_status_code, frequency,  frequency_code, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from dim_notification_types
+  hashSumCol: frequency_code
+
+---
+
+spring:
+  profiles: dim_persons
+batch:
+  outputFileName: dim_persons.csv
+  query: select person_key, person_id,  person_id_h,  household_id, CONVERT(VARCHAR(10),create_date, 112),  CONVERT(VARCHAR(10),last_login_date, 112),  CONVERT(VARCHAR(10),date_of_birth, 112),  gender, active_status,  pfm_login_cnt,  realm_cnt,  user_identity_cnt,  age,  postal_code,  terms_cond_acct_flag, CONVERT(VARCHAR(10),terms_cond_acct_dt, 112), account_cnt,  credit_card_cnt,  current_account_cnt,  savings_account_cnt,  loan_account_cnt, manual_account_cnt, asset_account_cnt,  wallet_cnt, Demo_Account_Cnt, has_account_flag, has_account_descr,  person_churn_status,  person_type,  is_significant, has_valid_demographics, activity_kpi, comparison_activity_kpi,  transaction_stability_kpi,  eop_tv, eop_tv_other, card_check, CONVERT(VARCHAR(10),churned_date, 112), type_i_crc, row_is_current, CONVERT(VARCHAR(10),row_start_date, 112), CONVERT(VARCHAR(10),row_end_date, 112), row_changed_reason, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source,  is_campaign_active, is_campaign_active_descr, is_cashback_terms_cond, is_cashback_terms_cond_descr, CONVERT(VARCHAR(10),cashback_terms_cond_accept_date, 112),  py_eop_tv,  py_eop_tv_other,  mm, mw from dim_persons
+  hashSumCol: has_account_flag
+
+---
+
+spring:
+  profiles: dim_realms
+batch:
+  outputFileName: dim_realms.csv
+  query: select realm_key,  realm_id, realm_identifier, descr,  acct_org_id,  acct_org_bank_code_identifier,  acct_org_name,  CONVERT(VARCHAR(10),acct_org_alt_name, 112),  type_i_crc, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from dim_realms
+  hashSumCol: realm_id
+
+---
+
+spring:
+  profiles: dim_service_segments
+batch:
+  outputFileName: dim_service_segments.csv
+  query: select service_segment_key,  service_segment_id, service_segment_name, service_segment_name_short, service_segment_descr,  service_segment_notes,  sort_order, market_id,  market_name,  segment_type_id,  segment_name, type_i_crc, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from dim_service_segments
+  hashSumCol: service_segment_id
+
+---
+
+spring:
+  profiles: dim_transaction_codes
+batch:
+  outputFileName: dim_transaction_codes.csv
+  query: select code, descr,  detailed_descr, exclude_from_market_watch,  exclude_from_text_detection,  insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from dim_transaction_codes
+  hashSumCol: insert_audit_key
+
+---
+
+spring:
+  profiles: dim_transaction_flags
+batch:
+  outputFileName: dim_transaction_flags.csv
+  query: select transaction_flag_key, flag_id,  is_tran_tagged_flag,  is_tran_split_flag, is_tran_read_flag,  is_tran_commented_flag, is_tran_personal_rule_appld_flag, is_tran_category_changed_flag,  is_tran_date_modified_flag, is_tran_uncleared_flag, is_tran_between_own_account_flag, is_tran_modified_flag,  is_tran_excluded_flag,  is_tran_flagged_flag, is_tran_deleted_flag, is_tran_clr_for_cat_uncert_flag,  is_tran_tagged, is_tran_split,  is_tran_read, is_tran_commented,  is_tran_personal_rule_applied,  is_tran_category_changed, is_tran_date_modified,  is_tran_uncleared,  is_tran_between_own_account,  is_tran_modified, is_tran_excluded, is_tran_flagged,  is_tran_deleted,  is_tran_clr_for_cat_uncert, insert_audit_key, update_audit_key from dim_transaction_flags
+  hashSumCol: flag_id
+
+---
+
+spring:
+  profiles: dim_transaction_texts
+batch:
+  outputFileName: dim_transaction_texts.csv
+  query: select transaction_text_key, transaction_text, original_text,  transaction_text_index, mapped_merchant_id, merchant_key, is_flagged, merchant_text_score,  type_i_crc, insert_audit_key, update_audit_key from dim_transaction_texts
+  hashSumCol: mapped_merchant_id
+
+---
+
+spring:
+  profiles: dim_transaction_types
+batch:
+  outputFileName: dim_transaction_types.csv
+  query: select transaction_type_key, multiplier, debit_kredit, income_expense, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from dim_transaction_types
+  hashSumCol: multiplier
+
+---
+
+spring:
+  profiles: fact_account_balances
+batch:
+  outputFileName: fact_account_balances.csv
+  query: select date_key, account_key,  person_key, household_key,  household_size_key, age_key,  gender_key, account_type_key, geography_key,  balance,  limit,  insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from fact_account_balances
+  hashSumCol: account_key
+
+---
+
+spring:
+  profiles: fact_accounts
+batch:
+  outputFileName: fact_accounts.csv
+  query: select account_key,  person_key, household_key,  realm_user_key, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from fact_accounts
+  hashSumCol: account_key
+
+---
+
+spring:
+  profiles: fact_life_goals_current
+batch:
+  outputFileName: fact_life_goals_current.csv
+  query: select life_goal_key,  account_key,  person_key, household_key,  achieved_date_key,  achieved_time_key,  create_date_key,  create_time_key,  modified_date_key,  modified_time_key,  start_date_key, start_time_key, target_date_key,  target_time_key,  category_key, intercept_amount, target_amount,  current_amount, recurring_amount, original_id_dd, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source,  user_db from fact_life_goals_current
+  hashSumCol: account_key
+
+---
+
+spring:
+  profiles: fact_login
+batch:
+  outputFileName: fact_login.csv
+  query: select household_key,  person_key, login_date_key, login_time_key, logout_date_key,  logout_time_key,  login_id_dd,  insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source,  user_db from fact_login
+  hashSumCol: household_key
+
+---
+
+spring:
+  profiles: fact_persons
+batch:
+  outputFileName: fact_persons.csv
+  query: select date_key, person_key, household_key,  household_size_key, age_key,  gender_key, geography_key,  income_key, total_income_12m, total_income_6m,  total_income_3m,  total_income_prevmonth, total_income_currmonth, income_no_months, insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from fact_persons
+  hashSumCol: person_key
+
+---
+
+spring:
+  profiles: fact_transactions
+batch:
+  outputFileName: fact_transactions.csv
+  query: select transaction_date_key, transaction_pfm_date_key, insert_date_key,  insert_time_key,  category_changed_date_key,  category_changed_time_key,  modified_date_key,  modified_time_key,  account_key,  account_type_key, category_key, merchant_key, mcc_key,  currency_key, transaction_type_key, transaction_flag_key, transaction_text_key, transaction_text_code_key,  transaction_id_dd,  user_db_dd, is_merchant_dd, parsed_merch_id_dd, parsed_merch_pos_id_dd, parsed_trans_text_code_dd,  amount, amount_abs, amount_in_currency, balance,  category_detection_accuracy,  insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from fact_transactions
+  hashSumCol: amount
+
+---
+
+spring:
+  profiles: fact_transactions_monthly_aggr
+batch:
+  outputFileName: fact_transactions_monthly_aggr.csv
+  query: select month_key,  person_key, household_key,  category_key, merchant_key, amount, amount_income,  amount_expenses,  number_of_transactions, d_trans_dates_cnt,  insert_audit_key, update_audit_key, CONVERT(VARCHAR(10),xtract_date, 112),  xtract_source from fact_transactions_monthly_aggr
+  hashSumCol: amount
+
+---
+
+spring:
+  profiles: users
+batch:
+  outputFileName: users.csv
+  query: select id,name from users 
+  hashSumCol: id
+
+

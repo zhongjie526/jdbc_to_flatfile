@@ -1,0 +1,37 @@
+pipeline {
+    agent { label 'NTPIBTSGV98'}
+
+    stages {
+		//Delete Binaries and Conf files before download to local workspace
+		 // sh 'rm -r dge-binaries${Version}${BuildNo}/*.war'
+        // Download binaries (war files) and conf.zip from Artifactory to local
+        stage('Download binaries') {
+
+            //TODO: update pattern to the correct format
+           steps {
+              script {
+                    def server = Artifactory.server('artifactory-server')
+                    def downloadSpec = """{
+                      "files":[
+                            {
+                           "pattern": "dge-batch-binaries${Version}${BuildNo}/*.jar",
+                            "target": "dge-batch-binaries/"
+                            }
+                      ]
+		                }"""
+                    server.download(downloadSpec)
+                    def buildInfo = server.download(downloadSpec)
+                }
+           }
+        }
+
+        // Deploy war and config files
+		stage('Untar Meniga-Batch') {
+             steps
+			 {
+                  //TODO: Copy binaries to applications folder, update this
+                  sh 'ls -ltr'
+             }
+         }
+    }
+}

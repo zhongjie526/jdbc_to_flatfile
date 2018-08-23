@@ -1,0 +1,9 @@
+batch:
+  name: "PushNotification"
+  processor: "NotificationProcessor"
+  queries: [ "SELECT t.CIF_NUMBER, t.CPM_CODE, c.CPM_PUSH_MESSAGE from TPIB_CAMPAIGN_TARGETTED t, TPIB_CAMPAIGN c WHERE c.CPM_IS_APPROVE=1 and c.CPM_START <= TRUNC(SYSDATE, 'DD') and c.CPM_END >= TRUNC(SYSDATE, 'DD') and c.CPM_CODE = t.CPM_CODE and c.CPM_SEND_PUSH = 1 and t.CPM_NOTIFIED = 0 and t.CPM_CLICK = 0 and t.CPM_DELIVERED = 0 and t.CPM_CLAIM = 0"]
+  tableName: "TPIB_CAMPAIGN_TARGETTED"
+  keys: ["CIF_NUMBER", "CPM_CODE"]
+  pushField: "CPM_PUSH_MESSAGE"
+  pushCif: "CIF_NUMBER"
+  updateInstructionsAfterPush: "CPM_NOTIFIED = 1"

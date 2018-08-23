@@ -1,0 +1,5 @@
+batch:
+  name: "HouseKeeping"
+  processor: "CleanupProcessor"
+  queries: [ "delete from tpib_campaign where CPM_END <= add_months(TRUNC(SYSDATE, 'DD'),(1*-1))",
+             "delete from TPIB_CAMPAIGN_TARGETTED where CPM_END is not null and CPM_END <= TRUNC(SYSDATE, 'DD') + (25*-1)"]

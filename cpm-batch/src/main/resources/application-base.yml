@@ -1,0 +1,14 @@
+spring:
+  main:
+    banner-mode: "off"
+    web-environment: false
+
+logging:
+  file: "logs/batch-${batch.name}.log"
+
+info:
+  app:
+    name: "@project.name@"
+    description: "@project.description@"
+    version: "@project.version@"
+    timestamp: "@timestamp@"

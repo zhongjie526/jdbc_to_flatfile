@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: "jdbc:oracle:thin:@172.29.28.58:1521:pibsath"
+    username: "pib"
+    password: "uobpassword(/prodlib/SCM/pwd/SPLTH/lxpibtsgv95-db-pwd.dat)"
+    driver-class-name: "oracle.jdbc.driver.OracleDriver"
+  jpa:
+    database-platform: "org.hibernate.dialect.Oracle10gDialect"
+
+
+batch:
+  outputFolder: "data/output/"
+  inputFolder: "data/input/"
+  country: "TH"
+  systemCode: "ICV"
+  pushServiceUrl: "http://172.29.227.89:8100/dge-ntn"
+  pushServiceVersion: "2.0"
+  pushApplicationCode: "DGB"
+  pushApplicationSubCode: "BAT"
+  
+  
+encrypt:
+  key1: "/prodlib/SCM/key/SPLTH/lxpibtsgv95keyfile1.dat"
+  key2: "/prodlib/SCM/key/SPLTH/lxpibtsgv95keyfile2.dat"

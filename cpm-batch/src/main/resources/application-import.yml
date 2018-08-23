@@ -1,0 +1,73 @@
+batch:
+  name: "ImportIncentiveTarget"
+  processor: "ImportProcessor"
+  fileName: "DB_INCENTIVE_TARGET_IN"
+  tableName: "TPIB_CAMPAIGN_TARGETTED"
+  keys: ["CIF_NUMBER", "CPM_CODE"]
+  headers:
+    -
+      fieldName: "recordType"
+      length: "1"
+      datatype: "String"
+    -
+      fieldName: "sourceSystemCode"
+      length: "3"
+      datatype: "String"
+    -
+      fieldName: "countryCode"
+      length: "2"
+      datatype: "String"
+    -
+      fieldName: "processingDate"
+      length: "8"
+      datatype: "String"
+    -
+      fieldName: "filler"
+      length: "60"
+      datatype: "String"
+  bodies:
+    -
+      fieldName: "recordType"
+      length: "1"
+      datatype: "String"
+    -
+      fieldName: "ID"
+      datatype: "Long"
+      seqNo: "SQ_PIB_CAMPAIGN_TARGETTED.nextval"
+    -
+      fieldName: "CIF_NUMBER"
+      length: "24"
+      datatype: "String"
+    -
+      fieldName: "CPM_CODE"
+      length: "8"
+      datatype: "String"
+    -
+      fieldName: "CPM_INCENTIVE_VALUE"
+      length: "15"
+      datatype: "Double"
+    -
+      fieldName: "CPM_INCENTIVE_TYPE"
+      length: "10"
+      datatype: "String"
+    -
+      fieldName: "CPM_START"
+      length: "8"
+      datatype: "Date"
+    -
+      fieldName: "CPM_END"
+      length: "8"
+      datatype: "Date"
+  footers:
+    -
+      fieldName: "recordType"
+      length: "1"
+      datatype: "String"
+    -
+      fieldName: "recordCount"
+      length: "10"
+      datatype: "Integer"
+    -
+      fieldName: "filler"
+      length: "63"
+      datatype: "String"
