@@ -1,6 +1,12 @@
 package com.uob.meniga.model;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -86,6 +92,39 @@ public class BatchJobConfig {
 	public void setOutputFileName(String outputFileName) {
 		this.outputFileName = outputFileName;
 	}
+	
+	 @Override
+	    public boolean equals(Object o) {
+	        if (this == o) return true;
+	        if (o == null || getClass() != o.getClass()) return false;
+	        BatchJobConfig that = (BatchJobConfig) o;
+	        return Objects.equals(outputFolder, that.outputFolder) &&
+	                Objects.equals(outputFileName, that.outputFileName) &&
+	                Objects.equals(query, that.query) &&
+	                Objects.equals(sourceSystemCode, that.sourceSystemCode) &&
+	                Objects.equals(countryCode, that.countryCode) &&
+	                Objects.equals(delimiter, that.delimiter) &&
+	                Objects.equals(hashSumCol, that.hashSumCol);
+	    }
+
+	    @Override
+	    public int hashCode() {
+
+	        return Objects.hash(outputFolder, outputFileName, query, sourceSystemCode, countryCode, delimiter, hashSumCol);
+	    }
+
+	    @Override
+	    public String toString() {
+	        return "BatchJobConfig{" +
+	                "outputFolder='" + outputFolder + '\'' +
+	                ", outputFileName='" + outputFileName + '\'' +
+	                ", query='" + query + '\'' +
+	                ", sourceSystemCode='" + sourceSystemCode + '\'' +
+	                ", countryCode='" + countryCode + '\'' +
+	                ", delimiter='" + delimiter + '\'' +
+	                ", hashSumCol='" + hashSumCol + '\'' +
+	                '}';
+	    }
     
     
 
